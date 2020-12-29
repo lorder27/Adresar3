@@ -61,7 +61,7 @@ body {
   color: #212529;
   text-align: left;
 /*  background-color: #fff;*/
-  background: repeating-linear-gradient(#343a40,rgba(0, 123, 255, 0.25));
+  background: repeating-linear-gradient(#17a2b8,rgba(0, 123, 255, 0.25));
 }
 
 [tabindex="-1"]:focus {

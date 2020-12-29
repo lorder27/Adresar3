@@ -45,6 +45,7 @@ namespace Adresar3.Controllers
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             var currentUserId = claim.Value;
             
+            
 
             // Only approved contacts are shown UNLESS you're authorized to see them
             // or you are the owner.
@@ -95,11 +96,14 @@ namespace Adresar3.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             var userId = claim.Value;
+            ApplicationDbContext db = new ApplicationDbContext();
 
+            //var userResult = db.AspNetUsers.FirstOrDefault(u => u.Id == AspNetUser.AspNetUserId);
 
             if (ModelState.IsValid)
             {
                 contact.OwnerID = userId;
+                contact.Username = User.Identity.Name;
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

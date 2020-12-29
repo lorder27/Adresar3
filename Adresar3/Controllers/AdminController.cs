@@ -23,13 +23,15 @@ namespace Adresar3.Controllers
         private readonly ContactContext _context;
         private readonly UserManager<ApplicationUser> userManager;
 
+        // Populate your users and store it in the ViewBag (or other storage)
 
-        public AdminController(ContactContext context)
+
+public AdminController(ContactContext context)
         {
             this.userManager = userManager;
             _context = context;
         }
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
 
 
@@ -41,6 +43,22 @@ namespace Adresar3.Controllers
             {
                 contacts = contacts.Where(s => s.Name.Contains(searchString));
             }
+
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
+            
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    contacts = contacts.OrderBy(m => m.Username);
+                    break;
+                
+            }
+
+
+
+
             return View(await contacts.ToListAsync());
 
 

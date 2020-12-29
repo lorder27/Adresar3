@@ -5,6 +5,7 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  radial-gradient:( #ff6a00, rgb(0, 255, 255))
 }
 
 /* Provide sufficient contrast against white background */
@@ -60,7 +61,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  background: linear-gradient(black, white);
+  background: linear-gradient(rgb(0, 255, 255), #ff6a00));
   margin-bottom: 60px;
 }
 .footer {
