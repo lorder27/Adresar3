@@ -67,9 +67,21 @@ public AdminController(ContactContext context)
         }
 
         // GET: AdminController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.OwnerID == id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            return View(contact);
         }
 
         // GET: AdminController/Create
@@ -94,45 +106,85 @@ public AdminController(ContactContext context)
         }
 
         // GET: AdminController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.OwnerID == id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return View(contact);
         }
 
         // POST: AdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(string id, [Bind("ContactId,OwnerID,Name,Address,City,State,Zip,Email,ContactNum,ContactNum1,ContactNum2,ContactNum3,ContactNum4,ContactNum5,Status,Role")] Contact contact)
         {
-            try
+            if (id != contact.OwnerID)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(contact);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ContactExists(contact.OwnerID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(contact);
         }
 
         // GET: AdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         // POST: AdminController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+
+        public async Task<IActionResult> Delete(string id)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.OwnerID == id);
+            if (contact == null)
             {
-                return View();
+                return NotFound();
             }
+
+            return View(contact);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.OwnerID == id);
+            _context.Contact.Remove(contact);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         
@@ -147,8 +199,13 @@ public AdminController(ContactContext context)
             var users = userManager.Users;
             return View(users);
         }
-        
+
+        private bool ContactExists(string id)
+        {
+            return _context.Contact.Any(e => e.OwnerID == id);
+        }
 
 
-    } }
+    }
+}
 
