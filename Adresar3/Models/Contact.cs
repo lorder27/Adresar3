@@ -38,6 +38,7 @@ namespace Adresar3.Models
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number (Optional)")]
         public string ContactNum5 { get; set; }
+        public string Title { get; set; }
 
 
         public ContactStatus Status { get; set; }

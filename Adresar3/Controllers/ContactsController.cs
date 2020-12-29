@@ -193,5 +193,6 @@ namespace Adresar3.Controllers
         {
             return _context.Contact.Any(e => e.OwnerID == id);
         }
+
     }
 }

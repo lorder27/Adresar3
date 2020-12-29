@@ -1,13 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-    <link rel="stylesheet" href="~/css/modal.css" />
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
- <div class="loading" align="center">
-    Loading. Please wait.<br />
-    <br />
-    <img src="loader.gif" alt="" />
-</div>
+    
+
+
+<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@using Adresar3
+@using Adresar3.Data
+@namespace Adresar3.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Adresar3.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using Adresar3.Models
+@inject IAuthorizationService AuthorizationService
+<html lang="en">
+
+<link href="css/styles.css" rel="stylesheet" />
+<nav>
+
+</nav>
+<header>
+<div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">ADRESAR</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Projekt za .NET Developer poziciju - Infobip</h2>
+                    <a class="btn btn-primary js-scroll-trigger" asp-area="" asp-controller="Contacts" asp-action="Index">Otvori Adresar</a>
+                </div>
+    </div>
+        </header>
+      

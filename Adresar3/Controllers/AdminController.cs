@@ -21,10 +21,12 @@ namespace Adresar3.Controllers
         // GET: AdminController
         public IList<Contact> Contact { get; set; }
         private readonly ContactContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
 
         public AdminController(ContactContext context)
         {
+            this.userManager = userManager;
             _context = context;
         }
         public async Task<IActionResult> Index(string searchString)
@@ -114,7 +116,21 @@ namespace Adresar3.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        
+        
+        public ActionResult ListUsers()
+        {
+            ApplicationDbContext UsersContext = new ApplicationDbContext();
+            UsersContext.Users.ToList(); // Exception
+            //return View(UsersContext);
 
-    }
-}
+
+            var users = userManager.Users;
+            return View(users);
+        }
+        
+
+
+    } }
 

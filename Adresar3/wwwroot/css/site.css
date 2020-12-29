@@ -60,6 +60,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
+  background: linear-gradient(black, white);
   margin-bottom: 60px;
 }
 .footer {
